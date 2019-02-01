@@ -1,0 +1,67 @@
+6################################################################################
+#servo test 5 servos
+#project by : Mohsen Nasiri
+#whith help from a site ^_^
+#########################defining or importing the libs#########################
+import RPi.GPIO as rp
+from time import sleep
+###############################defing some stuff################################
+#---------------------------raspbery pi servo pin-------------------------------
+servo1 = 7
+servo2 = 12
+servo3 = 16
+servo4 = 20
+servo5 = 21
+#---------------------defining ports name type and error------------------------
+rp.setmode(rp.BCM)
+rp.setwarnings(False)
+#-----------------------------defining ports type-------------------------------
+rp.setup(servo1,rp.OUT)
+rp.setup(servo2,rp.OUT)
+rp.setup(servo3,rp.OUT)
+rp.setup(servo4,rp.OUT)
+rp.setup(servo5,rp.OUT)
+#---------------------------defining the frequency------------------------------
+pwm1 = rp.PWM(servo1,50)
+pwm2 = rp.PWM(servo2,50)
+pwm3 = rp.PWM(servo3,50)
+pwm4 = rp.PWM(servo4,50)
+pwm5 = rp.PWM(servo5,50)
+#-------------------------seting servos at this point---------------------------
+pwm1.start(2.5)
+pwm2.start(2.5)
+pwm3.start(2.5)
+pwm4.start(2.5)
+pwm5.start(2.5)
+###########################for iterupting and cycling###########################
+try:
+  while True: 
+####################################loop########################################
+    angle = int(input("what the degre: ")) #getting the degree from keyboard
+    print("the angel given is: ",angle) #show the angles amount
+    duty = angle / 18 + 2 #changing degree to duty cycle
+    servonum = int(input("from 1 to 5 which servo:")) #choosing the servo to use
+    print("servo choosen is: ",servonum) #show the number of choosen servo
+    if (servonum == 1): #saying if we chose servo1:
+     pwm1.ChangeDutyCycle(duty) #seting servos to the point given
+    elif (servonum == 2): #saying if we chose servo2:
+     pwm2.ChangeDutyCycle(duty) #seting servos to the point given
+    elif (servonum == 3): #saying if we chose servo3:
+     pwm3.ChangeDutyCycle(duty) #seting servos to the point given
+    elif (servonum == 4): #saying if we chose servo4:
+     pwm4.ChangeDutyCycle(duty) #seting servos to the point given
+    elif (servonum == 5): #saying if we chose servo5:
+     pwm5.ChangeDutyCycle(duty) #seting servos to the point given
+    else: #saying if we chose some thing other than 1 to 5:
+      print("wrong servo number it must be from 1 to 5 restarting the loop...")
+    sleep(0.5) # a short period of time for no reason XD
+#################################for interupts##################################
+except KeyboardInterrupt:
+#-------------------------------stop sending pwm--------------------------------
+  pwm1.stop() 
+  pwm2.stop() 
+  pwm3.stop() 
+  pwm4.stop() 
+  pwm5.stop()  
+  rp.cleanup() #reseting raspberries ports
+################################################################################
